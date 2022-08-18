@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+:root {
+    --litColor: rgba(252, 225, 106, 0.932);
+}
+
+* {
+    font-family: 'Audiowide', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+html {
+    /* background-color: antiquewhite; */
+    /* margin: 0%;
+    padding: 0%;
+
+    height: 100%;
+    width: 100%; */
+}
+body {
+    background-color: var(--litColor);
+    margin: 0%;
+    padding: 0%;
+    padding-top: 3%;
+
+    height: 90vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    overflow: hidden;
+}
+body > * {
+    margin: 0% 3%;
+}
+
+.branded {
+    display: flex;
+    align-items: center;
+}
+
+.branded * {
+    margin: 0%;
+    padding: 0%;
+}
+
+.brand {
+    font-family: 'Satisfy', cursive;
+    font-size: 4em;
+    color: rgb(46, 62, 77);
+}
+
+.attribution {
+    font-family: 'M Plus 1p';
+    margin-left: auto;
+    font-size: 2em;
+    color: rgb(122, 111, 122);
+}
+
+.display {
+    background-color: rgb(215, 236, 158);
+    
+    border: 0.3em solid rgb(6, 61, 83);
+    border-bottom: 0.3em solid rgb(247, 242, 201);
+    border-radius: 0.6em;
+
+    max-height: 7%;
+    height: 20%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    padding: 3vw;
+}
+
+.screen {
+    font-size: 5em;
+    color: rgb(95, 107, 67);
+}
+
+.buttons {
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: center;
+}
+
+.buttons * {
+    /* background-color: aqua; */
+    flex: auto;
+    
+}
+.btnCol {
+    /* background-color: aliceblue; */
+
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    background-color: rgb(253, 224, 197);
+
+    position: relative;
+    margin: 0.1em;
+
+    height: 25%;
+
+    font-size: 4em;
+
+    flex: auto;
+
+    border-radius: 1vh;
+    border: 0.06em solid black;
+    border-top: 0.04em solid rgb(160, 155, 142);
+    box-shadow: 0em 0.1em rgb(83, 147, 184);
+    transition: 30ms;
+    color: rgb(65, 65, 65);
+}
+.btn:hover {
+    scale: 101%;
+    background-color: rgb(250, 230, 203);
+    border-top: 0.06em solid rgb(255, 255, 255);
+    box-shadow: 0em 0.15em rgb(83, 147, 184);
+    color: rgb(83, 81, 77);
+}
+.btn:active {
+    border: 0.06em solid black;
+    background-color: rgb(199, 116, 143);
+    border-bottom: 0.06em solid rgb(85, 45, 45);
+    box-shadow: none;
+    scale: 99%;
+    color: rgb(34, 34, 34);
+}
