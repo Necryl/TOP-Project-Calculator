@@ -24,6 +24,7 @@ const equalsBtn = buttonsArray[4][2];
 // defining status variables
 let inputArray = [];
 let newNumber = true;
+let history = [['0', []]];
 
 
 // define events
@@ -35,15 +36,17 @@ function run(runThis) {
     return runThis();
 }
 
-const calculate = {
-    add: (num1, num2) => num1 + num2,
-    subtract: (num1, num2) => num1 - num2,
-    multiply: (num1, num2) => num1 * num2,
-    divide: (num1, num2) => num1 / num2,
-};
-
 const operate = {
     input: (data, type) => {
+        let lastData = [null, null]
+        if (inputArray.length !== 0) {
+            if (inputArray[inputArray.length - 1][1] === 'snark') {
+                operate.clear()
+            } else {
+                lastData[0] = inputArray[inputArray.length - 1][0];
+                lastData[1] = inputArray[inputArray.length - 1][1];
+            }
+        }
         if (type === 'num') {
             if (display.textContent === '0') {
                 if (data !== '0') {
@@ -63,7 +66,7 @@ const operate = {
             }
         } else if (type === 'period') {
             let permit = false;
-            if (display.textContent === '0') {
+            if (display.textContent === '0' || lastData[1] !== 'num') {
                 inputArray.push(['0.', 'num']);
                 newNumber = false;
                 permit = true;
@@ -72,22 +75,42 @@ const operate = {
                 permit = true;
             }
             if (permit) {
-                display.textContent += '.';
+                if (lastData[1] === 'operator') {
+                    display.textContent += ' 0.';
+                } else {
+                    display.textContent += '.';
+                }
             }
         } else if (type === 'operator') {
-            inputArray.push([data, type]);
-            newNumber = true;
-            if (data === '/') {
-                display.textContent += ` \u00f7`;
-            } else {
-                display.textContent += ` ${data}`;
+            operate.calculate();
+            if (lastData[0] !== data) {
+                let text;
+                if (data === '/') {
+                    text = ` \u00f7`;
+                } else {
+                    text = ` ${data}`;
+                }
+                if (lastData[1] === 'operator') {
+                    inputArray[inputArray.length - 1][0] = data;
+                    display.textContent = display.textContent.slice(0, display.textContent.length - 2) + text;
+                } else {
+                    if (inputArray.length === 0) {
+                        inputArray.push(['0', 'num']);
+                    }
+                    inputArray.push([data, type]);
+                    display.textContent += text;
+                    newNumber = true;
+                }
             }
         }
-        // console.log(inputArray);
     },
     clear: () => {
-        display.textContent = '0';
-        inputArray = [];
+        if (inputArray.length !== 0 && display.textContent !== '0') {
+            operate.historyEntry();
+            display.textContent = '0';
+            inputArray = [];
+            operate.historyEntry();
+        }
     },
     calculate: () => {
         let inLen = inputArray.length;
@@ -123,14 +146,89 @@ const operate = {
                     result = num1 * num2;
                     break;
                 case '/':
-                    result = num1 / num2;
+                    if (num2 === 0) {
+                        result = ':|'
+                    } else {
+                        result = num1 / num2;
+                    }
                     break;
                 case '%':
                     result = num1 % num2;
                     break;
             }
-            inputArray.push([`${result}`, 'result']);
+            operate.historyEntry();
+            if (result === ':|') {
+                inputArray.push([`${result}`, 'snark']);
+            } else {
+                inputArray.push([`${result}`, 'result']);
+            }
             display.textContent = result;
+            operate.historyEntry();
         }
     },
+    backspace: () => {
+        if (inputArray.length !== 0) {
+            let item = cloneArray(inputArray[inputArray.length - 1]);
+            if (item[1] === 'operator' || item[0].length === 1) {
+                inputArray.pop();
+                if (display.textContent.length === 1) {
+                    display.textContent = '0';
+                } else {
+                    display.textContent = display.textContent.slice(0, display.textContent.length - 2);
+                }
+                operate.historyEntry();
+            } else {
+                operate.historyEntry();
+                inputArray[inputArray.length - 1][0] = item[0].slice(0, item[0].length - 1);
+                display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+                operate.historyEntry();
+            }
+        }
+    },
+    undo: () => {
+        if (history.length > 2) {
+            history.pop();
+            let rewind = cloneArray(history[history.length - 1]);
+            
+            display.textContent = rewind[0];
+            inputArray = rewind[1];
+        }
+    },
+    historyEntry: () => {
+        let entry = [display.textContent, cloneArray(inputArray)];
+        if (!compareArrays(history[history.length - 1], entry)) {
+            history.push(entry);
+        }
+    }
+}
+function compareArrays(array1, array2) {
+    let result = true;
+    if (array1.length === array2.length) {
+        for (let i = 0; i < array1.length; i++) {
+            if (Array.isArray(array1[i]) !== Array.isArray(array2[i])) {
+                result = false;
+            } else if (Array.isArray(array1[i])) {
+                if (!compareArrays(array1[i], array2[i])) {
+                    result = false;
+                }
+            } else if (array1[i] !== array2[i]) {
+                result = false;
+            }
+        }
+    } else {
+        result = false;
+    }
+    return result;
+}
+
+function cloneArray(array) {
+    let result = array.slice(0);
+
+    for (let i = 0; i < result.length; i++) {
+        if (Array.isArray(result[i])) {
+            result[i] = cloneArray(result[i]);
+        }
+    }
+
+    return result;
 }
