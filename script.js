@@ -16,6 +16,29 @@ const buttonsArray = run(() => {
     }
     return result;
 })
+const buttonsObject = {
+    '0': buttonsArray[1][3],
+    '1': buttonsArray[0][0],
+    '2': buttonsArray[1][0],
+    '3': buttonsArray[2][0],
+    '4': buttonsArray[0][1],
+    '5': buttonsArray[1][1],
+    '6': buttonsArray[2][1],
+    '7': buttonsArray[0][2],
+    '8': buttonsArray[1][2],
+    '9': buttonsArray[2][2],
+    '.': buttonsArray[0][3],
+    '+': buttonsArray[3][0],
+    '-': buttonsArray[3][1],
+    '*': buttonsArray[3][2],
+    '/': buttonsArray[3][3],
+    '%': buttonsArray[2][3],
+    'Escape': buttonsArray[4][0],
+    'z': buttonsArray[4][1],
+    'Backspace': buttonsArray[4][2],
+    'Enter': buttonsArray[4][3],
+    '=': buttonsArray[4][3],
+}
 const clearBtn = buttonsArray[4][0];
 const undoBtn = buttonsArray[4][1];
 const equalsBtn = buttonsArray[4][2];
@@ -28,7 +51,19 @@ let history = [['0', []]];
 
 
 // define events
+window.addEventListener('keydown', event => {
+    valid = false;
+    if ('0123456789-+/*%.='.includes(event.key) || ['Backspace', 'Enter', 'Escape'].includes(event.key)) {
+        valid = true;
+    } else if (event.ctrlKey && event.key === 'z') {
+        valid = true;
+    }
 
+    if (valid) {
+        buttonsObject[event.key].click();
+
+    }
+});
 
 
 // defining some functions
