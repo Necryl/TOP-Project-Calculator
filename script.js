@@ -8,7 +8,10 @@ const buttonsArray = run(() => {
     let temp_btnColum;
     for (let i = 0; i < temp_btnColumns.length; i++) {
         temp_btnCol = [];
-        temp_btnColum = document.querySelectorAll(`.buttons .btnCol:nth-child(${i+1}) .btn`);
+        temp_btnColum = document.querySelectorAll(`.btnCol:nth-child(${i+1}) .btn`);
+        if (i === 4) {
+            temp_btnColum = document.querySelectorAll('#funcs .btn');
+        }
         for (let x = 0; x < temp_btnColum.length; x++) {
             temp_btnCol.push(temp_btnColum[x]);
         }
@@ -42,7 +45,9 @@ const buttonsObject = {
 const clearBtn = buttonsArray[4][0];
 const undoBtn = buttonsArray[4][1];
 const equalsBtn = buttonsArray[4][2];
-
+const funcsCol = document.querySelector('#funcs');
+const metaBtns = document.querySelector('.metaButtons');
+const buttonsElement = document.querySelector('.buttons');
 
 // defining status variables
 let inputArray = [];
@@ -61,16 +66,24 @@ window.addEventListener('keydown', event => {
 
     if (valid) {
         buttonsObject[event.key].click();
-
     }
 });
-
+window.addEventListener('resize', event => {
+    if (document.documentElement.clientWidth > document.documentElement.clientHeight) {
+        // landscape mode
+        buttonsElement.appendChild(funcsCol);
+        funcsCol.classList.remove('funcs');
+    } else {
+        // potrait mode
+        funcsCol.classList.add('funcs');
+        metaBtns.appendChild(funcsCol);
+    }
+});
 
 // defining some functions
 function run(runThis) {
     return runThis();
 }
-
 const operate = {
     input: (data, type) => {
         let lastData = [null, null]
@@ -255,7 +268,6 @@ function compareArrays(array1, array2) {
     }
     return result;
 }
-
 function cloneArray(array) {
     let result = array.slice(0);
 

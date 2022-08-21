@@ -70,6 +70,7 @@ body > * {
 .screen {
     font-size: 5em;
     color: rgb(95, 107, 67);
+    text-align: end;
 }
 
 .buttons {
@@ -125,12 +126,26 @@ body > * {
     color: rgb(34, 34, 34);
 }
 
-.btnCol:nth-child(5) .btn:nth-child(3) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.metaButtons {
+    margin: 0%;
+    padding: 0%;
+    width: 100vw;
 }
 
-.btnCol:nth-child(5) .btn:nth-child(3) i {
+#funcs {
+    width: 100%;
+    flex: 1 1 0;
+}
+
+#funcs i {
     font-size: 0.62em;
+}
+
+#funcs * {
+    flex: auto;
+}
+
+.funcs {
+    flex-direction: row;
+    flex-wrap: wrap;
 }
