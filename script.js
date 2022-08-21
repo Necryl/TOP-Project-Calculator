@@ -54,7 +54,6 @@ let inputArray = [];
 let newNumber = true;
 let history = [['0', []]];
 
-
 // define events
 window.addEventListener('keydown', event => {
     valid = false;
@@ -69,15 +68,7 @@ window.addEventListener('keydown', event => {
     }
 });
 window.addEventListener('resize', event => {
-    if (document.documentElement.clientWidth > document.documentElement.clientHeight) {
-        // landscape mode
-        buttonsElement.appendChild(funcsCol);
-        funcsCol.classList.remove('funcs');
-    } else {
-        // potrait mode
-        funcsCol.classList.add('funcs');
-        metaBtns.appendChild(funcsCol);
-    }
+    onViewportResize();
 });
 
 // defining some functions
@@ -279,3 +270,17 @@ function cloneArray(array) {
 
     return result;
 }
+function onViewportResize() {
+    if (document.documentElement.clientWidth/document.documentElement.clientHeight > 0.83) {
+        // landscape mode
+        buttonsElement.appendChild(funcsCol);
+        funcsCol.classList.remove('funcs');
+    } else {
+        // potrait mode
+        funcsCol.classList.add('funcs');
+        metaBtns.appendChild(funcsCol);
+    }
+}
+
+// on start
+onViewportResize();
