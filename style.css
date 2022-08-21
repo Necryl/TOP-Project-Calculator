@@ -39,15 +39,16 @@ body > * {
 
 .brand {
     font-family: 'Satisfy', cursive;
-    font-size: 4em;
+    font-size: 300%;
     color: rgb(46, 62, 77);
 }
 
 .attribution {
     font-family: 'M Plus 1p';
     margin-left: auto;
-    font-size: 2em;
+    font-size: 150%;
     color: rgb(122, 111, 122);
+    text-align: end;
 }
 
 .display {
@@ -68,7 +69,7 @@ body > * {
 }
 
 .screen {
-    font-size: 5em;
+    font-size: 300%;
     color: rgb(95, 107, 67);
     text-align: end;
 }
@@ -97,9 +98,9 @@ body > * {
     position: relative;
     margin: 0.1em;
 
-    height: 25%;
+    height: 9vh;
 
-    font-size: 4em;
+    font-size: 200%;
 
     flex: auto;
 
